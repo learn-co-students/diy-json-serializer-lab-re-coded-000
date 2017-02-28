@@ -1,0 +1,26 @@
+<div class="productName" id="name-<%@product.id%>"><%= @product.name %></div>
+<a href="#" class="js-next" data-id="<%=@product.id%>">Next Product</a>
+<p class="productBody" id="body-<%= @product.id %>"><%= @product.description %></p>
+
+<script type="text/javascript" charset="utf-8">
+
+$(function () {
+
+  $(".js-next").on('click', function() {
+  	var nextId = parseInt($(".js-next").attr("data-id")) + 1;
+
+  	//alert()
+    var id = $(this).data("id");
+    // change the URL to the new route
+
+    $.get("/products/" + nextId + "/data", function(data) {
+      // Replace text of body-id div
+      var data=JSON.parse(data)
+      console.log(data)
+      $(".productName" ).text(data.name);
+      $(".productBody" ).text(data.description);
+      $(".js-next").attr("data-id", data.id);
+    });
+  });
+});
+</script>
